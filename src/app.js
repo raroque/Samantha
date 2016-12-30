@@ -75,7 +75,6 @@ function processEvent(event) {
                     
                     if (action == "samantha.list") {
 	                    console.log("user asked for list")
-	                    mongoFind();
 	                    var splittedText = splitResponse("here is your list: " + mongoFind());
 
                         async.eachSeries(splittedText, (textPart, callback) => {
@@ -103,7 +102,7 @@ function mongoFind() {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
-			console.log(docs.todo);
+			console.log(docs);
 			return docs;
 		});
 	});
