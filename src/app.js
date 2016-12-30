@@ -75,7 +75,7 @@ function processEvent(event) {
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
                     
-                    if action == "samantha.list" {
+                    if (action == "samantha.list") {
 	                    console.log("IT WORKED")
                     }
 
