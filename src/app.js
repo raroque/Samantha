@@ -17,6 +17,9 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
 
+var mongodb = require('mongodb');
+var uri = 'mongodb://heroku_pjktj26b:4g8si3lacn97htocjh02snl90s@ds145158.mlab.com:45158/heroku_pjktj26b';
+
 function processEvent(event) {
     var sender = event.sender.id.toString();
 
@@ -27,7 +30,8 @@ function processEvent(event) {
         if (!sessionIds.has(sender)) {
             sessionIds.set(sender, uuid.v1());
         }
-
+		
+		mongoFind()
         console.log("Text", text);
 
         let apiaiRequest = apiAiService.textRequest(text,
@@ -84,7 +88,15 @@ function processEvent(event) {
     }
 }
 
-
+function mongoFind() {
+	mongodb.MongoClient.connect(uri, function(err, db) {
+		if(err) throw err;
+		var songs = db.collection('tasks');
+		songs.find().toArray(function(err, docs) {
+			console.log(docs);
+		});
+	}
+}
 
 function splitResponse(str) {
     if (str.length <= 320) {
