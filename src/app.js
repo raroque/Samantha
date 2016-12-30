@@ -102,8 +102,8 @@ function mongoFind() {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
-			console.log(docs);
-			return docs;
+			console.log(docs["todo"]);
+			return docs["todo"];
 		});
 	});
 }
