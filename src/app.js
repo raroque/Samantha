@@ -99,14 +99,17 @@ function processEvent(event) {
 }
 
 function mongoFind() {
+	var output = ""
 	mongodb.MongoClient.connect(uri, function(err, db) {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
 			console.log(docs[0].todo.toString());
-			return "nothing here";
+			output = docs[0].todo.toString();
 		});
 	});
+	
+	return "nothing here";
 }
 
 function splitResponse(str) {
