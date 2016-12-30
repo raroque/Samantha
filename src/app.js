@@ -17,12 +17,6 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
 
-var express = require("express");
-var mysql = require('mysql');
-var app = express();
-app.use(express.logger());
-
-
 function processEvent(event) {
     var sender = event.sender.id.toString();
 
