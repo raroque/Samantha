@@ -139,7 +139,7 @@ function sendFBMessage(sender, messageData, callback) {
         }
 
         if (callback) {
-	        console.log('message sent: ', messageData);
+	        console.log('message sent: ', messageData.text);
             callback();
         }
     });
