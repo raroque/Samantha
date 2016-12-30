@@ -31,7 +31,6 @@ function processEvent(event) {
             sessionIds.set(sender, uuid.v1());
         }
 		
-		mongoFind()
         console.log("Text", text);
 
         let apiaiRequest = apiAiService.textRequest(text,
@@ -73,15 +72,21 @@ function processEvent(event) {
                     console.log('Response as text message');
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
-                    var splittedText = splitResponse(responseText);
                     
                     if (action == "samantha.list") {
-	                    console.log("IT WORKED")
-                    }
+	                    console.log("user asked for list")
+	                    var splittedText = splitResponse("here is your list: " + mongoFind());
 
+                        async.eachSeries(splittedText, (textPart, callback) => {
+                            sendFBMessage(sender, {text: textPart}, callback);
+                        });
+                        
+                    } else {
+	                    var splittedText = splitResponse(responseText);
                     async.eachSeries(splittedText, (textPart, callback) => {
                         sendFBMessage(sender, {text: textPart}, callback);
                     });
+                    }
                 }
 
             }
@@ -97,7 +102,8 @@ function mongoFind() {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
-			console.log(docs);
+			console.log(docs.todo);
+			return docs;
 		});
 	});
 }
