@@ -109,7 +109,7 @@ function mongoFind() {
 		});
 	});
 	
-	return "nothing here";
+	return output;
 }
 
 function splitResponse(str) {
