@@ -95,7 +95,7 @@ function mongoFind() {
 		songs.find().toArray(function(err, docs) {
 			console.log(docs);
 		});
-	};
+	});
 }
 
 function splitResponse(str) {
