@@ -77,6 +77,7 @@ function processEvent(event) {
 	                    console.log("user asked for list")
 	                    var list = "nothing here";
 	                    mongoFind(function(array) {
+		                    console.log("now this array is called");
 		                    list = array;
 	                    });
 	                    var splittedText = splitResponse("here is your list: " + list);
