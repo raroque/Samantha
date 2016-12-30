@@ -74,6 +74,10 @@ function processEvent(event) {
                     // facebook API limit for text length is 320,
                     // so we must split message if needed
                     var splittedText = splitResponse(responseText);
+                    
+                    if action == "samantha.list" {
+	                    console.log("IT WORKED")
+                    }
 
                     async.eachSeries(splittedText, (textPart, callback) => {
                         sendFBMessage(sender, {text: textPart}, callback);
