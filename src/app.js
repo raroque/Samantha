@@ -75,16 +75,14 @@ function processEvent(event) {
                     
                     if (action == "samantha.list") {
 	                    console.log("user asked for list")
-	                    var list = "nothing here";
 	                    mongoFind(function(array) {
 		                    console.log("now this array is called");
-		                    list = array;
-	                    });
-	                    var splittedText = splitResponse("here is your list: " + list);
+		                    var splittedText = splitResponse("here is your list: " + array);
 
-                        async.eachSeries(splittedText, (textPart, callback) => {
-                            sendFBMessage(sender, {text: textPart}, callback);
-                        });
+	                        async.eachSeries(splittedText, (textPart, callback) => {
+	                            sendFBMessage(sender, {text: textPart}, callback);
+	                        });
+	                    });
                         
                     } else {
 	                    var splittedText = splitResponse(responseText);
