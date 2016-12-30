@@ -91,6 +91,17 @@ function processEvent(event) {
                     });
                     }
                 }
+                
+                if (action == "samantha.remind") {
+	                console.log("reminder executed");
+	                setTimeout(function() {
+					    var splittedText = splitResponse("20 seconds has passed");
+
+	                        async.eachSeries(splittedText, (textPart, callback) => {
+	                            sendFBMessage(sender, {text: textPart}, callback);
+	                        });
+					}, 20000);
+                }
 
             }
         });
