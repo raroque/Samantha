@@ -75,7 +75,8 @@ function processEvent(event) {
                     
                     if (action == "samantha.list") {
 	                    console.log("user asked for list")
-	                    var splittedText = splitResponse("here is your list: " + mongoFind());
+	                    var list = mongoFind();
+	                    var splittedText = splitResponse("here is your list: " + list);
 
                         async.eachSeries(splittedText, (textPart, callback) => {
                             sendFBMessage(sender, {text: textPart}, callback);
