@@ -18,7 +18,8 @@
     "json-bigint": "^0.2.0",
     "node-uuid": "^1.4.7",
     "request": "^2.73.0",
-    "mongodb": "~2.0"
+    "mongodb": "~2.0",
+    "mysql": ""
   },
   "repository": {
     "type": "git",
