@@ -75,6 +75,7 @@ function processEvent(event) {
                     
                     if (action == "samantha.list") {
 	                    console.log("user asked for list")
+	                    mongoFind();
 	                    var splittedText = splitResponse("here is your list: " + mongoFind());
 
                         async.eachSeries(splittedText, (textPart, callback) => {
