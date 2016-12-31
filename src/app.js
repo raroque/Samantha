@@ -100,6 +100,14 @@ function processEvent(event) {
 		                    });
 	                    } else if (list_action == "remove") {
 		                    console.log("action was remove");
+		                    mongoPull(item_to_modify, function() {
+			                    console.log("done removing, sending a message");
+			                    var splittedText = splitResponse("Removed " + item_to_modify + " from your list!");
+	
+		                        async.eachSeries(splittedText, (textPart, callback) => {
+		                            sendFBMessage(sender, {text: textPart}, callback);
+		                        });
+		                    });
 	                    } else if (list_action == "read") {
 		                    console.log("action was read");
 	                    }
@@ -151,6 +159,18 @@ function mongoAdd(field, cb) {
 		tasks.update(
 			{ name: "Chris" },
 			{ $addToSet: {todo: field} }
+		);
+		cb();
+	});
+}
+
+function mongoPull(field, cb) {
+	mongodb.MongoClient.connect(uri, function(err, db) {
+		if(err) throw err;
+		var tasks = db.collection('tasks');
+		tasks.update(
+			{ name: "Chris" },
+			{ $pull: {todo: field} }
 		);
 		cb();
 	});
