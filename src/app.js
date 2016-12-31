@@ -145,7 +145,7 @@ function processEvent(event) {
 	                let item_to_pomo = response.result.parameters.item_to_pomo;
 	                
 					if (pomo_action == "start") {
-						startPomo(true);
+						startPomo(sender, true);
 					} else if (pomo_action == "stop") {
 						clearTimeout(timer);
 					} else if (pomo_action == "pause") {
@@ -169,11 +169,11 @@ function createTimer(functoexecute, time) {
 	timer = setTimeout(functoexecute, time);
 }
 
-function startPomo(start) {
+function startPomo(sender, start) {
 	if (start) {
 		createTimer(function() {
 		    var splittedText = splitResponse("20 seconds has passed, take a break for 5 seconds");
-			startPomo(false);
+			startPomo(sender, false);
             async.eachSeries(splittedText, (textPart, callback) => {
                 sendFBMessage(sender, {text: textPart}, callback);
             });
@@ -181,7 +181,7 @@ function startPomo(start) {
 	} else {
 		createTimer(function() {
 		    var splittedText = splitResponse("Break over, work for 20 seconds");
-			startPomo(false);
+			startPomo(sender, false);
             async.eachSeries(splittedText, (textPart, callback) => {
                 sendFBMessage(sender, {text: textPart}, callback);
             });
