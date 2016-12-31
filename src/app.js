@@ -86,7 +86,7 @@ function processEvent(event) {
                         
                     } else if (action == "samantha.list.modify") {
 	                    let list_action = response.result.parameters.list_action;
-	                    let item_to_modify = response.result.parameters.list_action;
+	                    let item_to_modify = response.result.parameters.item_to_modify;
 	                    
 	                    if (list_action == "add") {
 		                    console.log("action was add " + item_to_modify);
