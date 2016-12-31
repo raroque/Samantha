@@ -149,6 +149,7 @@ function processEvent(event) {
 						var splittedText = splitResponse("I've started a timer, I'll message you when you can take a break :)");
 			            async.eachSeries(splittedText, (textPart, callback) => {
 			                sendFBMessage(sender, {text: textPart}, callback);
+			            });
 					} else if (pomo_action == "stop") {
 						clearTimeout(timer);
 						var splittedText = splitResponse("I've stopped the timer, hopefully that was helpful :)");
