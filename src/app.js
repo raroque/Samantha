@@ -84,11 +84,30 @@ function processEvent(event) {
 	                        });
 	                    });
                         
+                    } else if (action == "samantha.list.modify") {
+	                    let list_action = response.result.parameters.list_action;
+	                    let item_to_modify = response.result.parameters.list_action;
+	                    
+	                    if (list_action == "add") {
+		                    console.log("action was add " + item_to_modify);
+		                    mongoAdd(item_to_modify, function() {
+			                    console.log("done adding, sending a message");
+		                    var splittedText = splitResponse("Added " + item_to_modify + " to your list!");
+
+	                        async.eachSeries(splittedText, (textPart, callback) => {
+	                            sendFBMessage(sender, {text: textPart}, callback);
+	                        });
+		                    }
+	                    } else if (list_action == "remove") {
+		                    console.log("action was remove");
+	                    } else if (list_action == "read") {
+		                    console.log("action was read");
+	                    }
                     } else {
 	                    var splittedText = splitResponse(responseText);
-                    async.eachSeries(splittedText, (textPart, callback) => {
-                        sendFBMessage(sender, {text: textPart}, callback);
-                    });
+	                    async.eachSeries(splittedText, (textPart, callback) => {
+	                        sendFBMessage(sender, {text: textPart}, callback);
+	                    });
                     }
                 }
                 
@@ -123,6 +142,18 @@ function mongoFind(cb) {
 		});
 	});
 	
+}
+
+function mongoAdd(field, cb) {
+	mongodb.MongoClient.connect(uri, function(err, db) {
+		if(err) throw err;
+		var tasks = db.collection('tasks');
+		tasks.update(
+			{ name: "chris" },
+			{ $addToSet: {todo: field} }
+		);
+		cb();
+	});
 }
 
 function splitResponse(str) {
