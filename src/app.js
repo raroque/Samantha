@@ -97,7 +97,7 @@ function processEvent(event) {
 		                        async.eachSeries(splittedText, (textPart, callback) => {
 		                            sendFBMessage(sender, {text: textPart}, callback);
 		                        });
-		                    };
+		                    });
 	                    } else if (list_action == "remove") {
 		                    console.log("action was remove");
 	                    } else if (list_action == "read") {
