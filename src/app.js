@@ -152,7 +152,7 @@ function mongoFind(cb) {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
-			output = docs[0].todo..join(', ');
+			output = docs[0].todo.join(', ');
 			console.log("output is " + output);
 		//	output = docs[0].todo.toString();
 			cb(output);
