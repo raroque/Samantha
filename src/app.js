@@ -92,12 +92,12 @@ function processEvent(event) {
 		                    console.log("action was add " + item_to_modify);
 		                    mongoAdd(item_to_modify, function() {
 			                    console.log("done adding, sending a message");
-		                    var splittedText = splitResponse("Added " + item_to_modify + " to your list!");
-
-	                        async.eachSeries(splittedText, (textPart, callback) => {
-	                            sendFBMessage(sender, {text: textPart}, callback);
-	                        });
-		                    }
+			                    var splittedText = splitResponse("Added " + item_to_modify + " to your list!");
+	
+		                        async.eachSeries(splittedText, (textPart, callback) => {
+		                            sendFBMessage(sender, {text: textPart}, callback);
+		                        });
+		                    };
 	                    } else if (list_action == "remove") {
 		                    console.log("action was remove");
 	                    } else if (list_action == "read") {
