@@ -17,6 +17,8 @@ const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
 const apiAiService = apiai(APIAI_ACCESS_TOKEN, {language: APIAI_LANG, requestSource: "fb"});
 const sessionIds = new Map();
 
+var timer = null;
+
 var mongodb = require('mongodb');
 var uri = 'mongodb://heroku_pjktj26b:4g8si3lacn97htocjh02snl90s@ds145158.mlab.com:45158/heroku_pjktj26b';
 
@@ -137,6 +139,23 @@ function processEvent(event) {
 	                        });
 					}, 20000);
                 }
+                
+                if (action == "samantha.pomo") {
+	                let pomo_action = response.result.parameters.pomo_action;
+	                let item_to_pomo = response.result.parameters.item_to_pomo;
+	                
+					if (pomo_action == "start") {
+						startPomo(true);
+					} else if (pomo_action == "stop") {
+						clearTimeout(timer);
+					} else if (pomo_action == "pause") {
+						var splittedText = splitResponse("Sorry, no progress will be made if I let you take a break early. You can only stop completely.");
+			            async.eachSeries(splittedText, (textPart, callback) => {
+			                sendFBMessage(sender, {text: textPart}, callback);
+			            });
+					}
+	            
+                }
 
             }
         });
@@ -144,6 +163,30 @@ function processEvent(event) {
         apiaiRequest.on('error', (error) => console.error(error));
         apiaiRequest.end();
     }
+}
+
+function createTimer(functoexecute, time) {
+	timer = setTimeout(functoexecute, time);
+}
+
+function startPomo(start) {
+	if (start) {
+		createTimer(function() {
+		    var splittedText = splitResponse("20 seconds has passed, take a break for 5 seconds");
+			startPomo(false);
+            async.eachSeries(splittedText, (textPart, callback) => {
+                sendFBMessage(sender, {text: textPart}, callback);
+            });
+        }, 20000);
+	} else {
+		createTimer(function() {
+		    var splittedText = splitResponse("Break over, work for 20 seconds");
+			startPomo(false);
+            async.eachSeries(splittedText, (textPart, callback) => {
+                sendFBMessage(sender, {text: textPart}, callback);
+            });
+        }, 5000);
+	}
 }
 
 function mongoFind(cb) {
