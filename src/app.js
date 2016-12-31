@@ -149,7 +149,7 @@ function mongoAdd(field, cb) {
 		if(err) throw err;
 		var tasks = db.collection('tasks');
 		tasks.update(
-			{ name: "chris" },
+			{ name: "Chris" },
 			{ $addToSet: {todo: field} }
 		);
 		cb();
