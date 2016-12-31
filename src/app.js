@@ -110,6 +110,14 @@ function processEvent(event) {
 		                    });
 	                    } else if (list_action == "read") {
 		                    console.log("action was read");
+		                    mongoFind(function(array) {
+		                    console.log("now this array is called");
+		                    var splittedText = splitResponse("here is your list: " + array);
+
+	                        async.eachSeries(splittedText, (textPart, callback) => {
+	                            sendFBMessage(sender, {text: textPart}, callback);
+	                        });
+	                    });
 	                    }
                     } else {
 	                    var splittedText = splitResponse(responseText);
@@ -144,8 +152,9 @@ function mongoFind(cb) {
 		if(err) throw err;
 		var songs = db.collection('tasks');
 		songs.find().toArray(function(err, docs) {
-			console.log(docs[0].todo.toString());
-			output = docs[0].todo.toString();
+			output = docs[0].todo..join(', ');
+			console.log("output is " + output);
+		//	output = docs[0].todo.toString();
 			cb(output);
 		});
 	});
