@@ -146,8 +146,15 @@ function processEvent(event) {
 	                
 					if (pomo_action == "start") {
 						startPomo(sender, true);
+						var splittedText = splitResponse("I've started a timer, I'll message you when you can take a break :)");
+			            async.eachSeries(splittedText, (textPart, callback) => {
+			                sendFBMessage(sender, {text: textPart}, callback);
 					} else if (pomo_action == "stop") {
 						clearTimeout(timer);
+						var splittedText = splitResponse("I've stopped the timer, hopefully that was helpful :)");
+			            async.eachSeries(splittedText, (textPart, callback) => {
+			                sendFBMessage(sender, {text: textPart}, callback);
+			            });
 					} else if (pomo_action == "pause") {
 						var splittedText = splitResponse("Sorry, no progress will be made if I let you take a break early. You can only stop completely.");
 			            async.eachSeries(splittedText, (textPart, callback) => {
@@ -172,7 +179,7 @@ function createTimer(functoexecute, time) {
 function startPomo(sender, start) {
 	if (start) {
 		createTimer(function() {
-		    var splittedText = splitResponse("20 seconds has passed, take a break for 5 seconds");
+		    var splittedText = splitResponse("Time for a break! I'll let you know when to get back to work :)");
 			startPomo(sender, false);
             async.eachSeries(splittedText, (textPart, callback) => {
                 sendFBMessage(sender, {text: textPart}, callback);
@@ -180,8 +187,8 @@ function startPomo(sender, start) {
         }, 20000);
 	} else {
 		createTimer(function() {
-		    var splittedText = splitResponse("Break over, work for 20 seconds");
-			startPomo(sender, false);
+		    var splittedText = splitResponse("Time to get to work! I'll let you know when to stop");
+			startPomo(sender, true);
             async.eachSeries(splittedText, (textPart, callback) => {
                 sendFBMessage(sender, {text: textPart}, callback);
             });
