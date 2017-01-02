@@ -145,7 +145,8 @@ function processEvent(event) {
                 if (action == "samantha.scrape") {
 	                console.log("scraping");
 	                let url_to_scrape = response.result.parameters.url;
-	               bb_scrape.scrape(url_to_scrape);
+	               var exercises = bb_scrape.scrape(url_to_scrape);
+	               console.log(exercises.toString());
                 }
                 
                 if (action == "samantha.pomo") {

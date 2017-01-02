@@ -5,6 +5,9 @@ var fs = require('fs');
 http://www.bodybuilding.com/fun/arnold-schwarzeneggers-blueprint-to-cut-day-1.html
 
 module.exports.scrape = function scrape(bbURL) {
+	
+	var exercises = ["default"];
+	
 	var options = {
         url : bbURL,
         headers:  {
@@ -23,6 +26,7 @@ module.exports.scrape = function scrape(bbURL) {
 	  $('div#dpg-plan-table > div.dpg-plan-exercises > div.dpgpt-content').each(function( index ) {
 	  //  var title = $(this).find('h5.dpg-h5').text().trim();
 	    var exercise = $(this).find('h4.dpg-h4').text().trim();
+	    exercises.push(exercise);
 	    var sets_and_reps = $(this).text().trim().replace(exercise, '');
 	    var exercise_link = $(this).find('h4.dpg-h4 > a').attr('href');
 	    var exercise_image = $(this).next().find('div.dpgpt-images > a > img').attr('src');
@@ -33,6 +37,8 @@ module.exports.scrape = function scrape(bbURL) {
 	    console.log("image_link: " + exercise_image);
 	 //   fs.appendFileSync('bb.txt' + '\n' + first_ex + '\n' + reps + '\n');
 	  });
+	  
+	  return exercises;
 	
 	});
 }
