@@ -156,6 +156,12 @@ function processEvent(event) {
 	                });
                 }
                 
+                if (action == "samantha.workout.next") {
+	                mongoFindExercise(function(output) {
+		                console.log("next exercise is " + output)
+	                });
+                }
+                
                 if (action == "samantha.pomo") {
 	                let pomo_action = response.result.parameters.pomo_action;
 	                let item_to_pomo = response.result.parameters.item_to_pomo;
@@ -193,6 +199,13 @@ function createTimer(functoexecute, time) {
 	timer = setTimeout(functoexecute, time);
 }
 
+function next_exercise(list, index) {
+	index = index + 1;
+	if(index < list.count) {
+		
+	}
+}
+
 function startPomo(sender, start) {
 	if (start) {
 		createTimer(function() {
@@ -222,6 +235,19 @@ function mongoFind(cb) {
 			output = docs[0].todo.join(', ');
 			console.log("output is " + output);
 		//	output = docs[0].todo.toString();
+			cb(output);
+		});
+	});
+}
+
+function mongoFindExercise(cb) {
+	var output = ""
+	mongodb.MongoClient.connect(uri, function(err, db) {
+		if(err) throw err;
+		var songs = db.collection('tasks');
+		songs.find().toArray(function(err, docs) {
+			output = docs[0].exercises[0];
+			console.log(output);
 			cb(output);
 		});
 	});
