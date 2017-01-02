@@ -142,6 +142,11 @@ function processEvent(event) {
 					}, 20000);
                 }
                 
+                if (action == "samantha.scrape") {
+	                console.log("scraping");
+	                
+                }
+                
                 if (action == "samantha.pomo") {
 	                let pomo_action = response.result.parameters.pomo_action;
 	                let item_to_pomo = response.result.parameters.item_to_pomo;
