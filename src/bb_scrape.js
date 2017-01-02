@@ -4,7 +4,7 @@ var fs = require('fs');
 
 http://www.bodybuilding.com/fun/arnold-schwarzeneggers-blueprint-to-cut-day-1.html
 
-module.exports.scrape = function scrape(bbURL) {
+module.exports.scrape = function scrape(bbURL, cb) {
 	
 	var exercises = ["default"];
 	
@@ -38,7 +38,7 @@ module.exports.scrape = function scrape(bbURL) {
 	 //   fs.appendFileSync('bb.txt' + '\n' + first_ex + '\n' + reps + '\n');
 	  });
 	  console.log("exercises are " + exercises.toString());
-	  return exercises;
+	  cb(exercises)
 	
 	});
 }
