@@ -148,6 +148,11 @@ function processEvent(event) {
 	                bb_scrape.scrape(url_to_scrape, function(exercises) {
 		                var exStr = exercises.join('\r\n');
 		                console.log("EXERCISES ARE: " + exStr);
+		                
+		                var splittedText = splitResponse(exStr);
+			            async.eachSeries(splittedText, (textPart, callback) => {
+			                sendFBMessage(sender, {text: textPart}, callback);
+			            });
 	                });
                 }
                 
