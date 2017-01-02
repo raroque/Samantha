@@ -146,7 +146,7 @@ function processEvent(event) {
 	                console.log("scraping");
 	                let url_to_scrape = response.result.parameters.url;
 	               var exercises = bb_scrape.scrape(url_to_scrape);
-	               console.log(exercises.toString());
+	               console.log("EXERCISES ARE: " exercises.toString());
                 }
                 
                 if (action == "samantha.pomo") {
