@@ -6,7 +6,7 @@ http://www.bodybuilding.com/fun/arnold-schwarzeneggers-blueprint-to-cut-day-1.ht
 
 module.exports.scrape = function scrape(bbURL, cb) {
 	
-	var exercises = ["default"];
+	var exercises = [];
 	
 	var options = {
         url : bbURL,

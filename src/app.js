@@ -146,7 +146,8 @@ function processEvent(event) {
 	                console.log("scraping");
 	                let url_to_scrape = response.result.parameters.url;
 	                bb_scrape.scrape(url_to_scrape, function(exercises) {
-		                console.log("EXERCISES ARE: " + exercises.toString());
+		                var exStr = exercises.join('\r\n');
+		                console.log("EXERCISES ARE: " + exStr);
 	                });
                 }
                 
