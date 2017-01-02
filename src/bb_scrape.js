@@ -4,7 +4,7 @@ var fs = require('fs');
 
 http://www.bodybuilding.com/fun/arnold-schwarzeneggers-blueprint-to-cut-day-1.html
 
-module.exports.scrape = func scrape(bbURL) {
+module.exports.scrape = function scrape(bbURL) {
 	var options = {
         url : bbURL,
         headers:  {
