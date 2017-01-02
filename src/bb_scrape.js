@@ -37,7 +37,7 @@ module.exports.scrape = function scrape(bbURL) {
 	    console.log("image_link: " + exercise_image);
 	 //   fs.appendFileSync('bb.txt' + '\n' + first_ex + '\n' + reps + '\n');
 	  });
-	  
+	  console.log("exercises are " + exercises.toString());
 	  return exercises;
 	
 	});
